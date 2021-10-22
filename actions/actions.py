@@ -20,6 +20,8 @@ from rasa_sdk.types import DomainDict
 
 from PIL import Image
 
+#New Git Comment
+
 import numpy as np
 
 
