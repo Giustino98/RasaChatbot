@@ -1,0 +1,28 @@
+digraph  {
+0 [class="start active", fillcolor=green, fontsize=12, label=START, style=filled];
+"-1" [class=end, fillcolor=red, fontsize=12, label=END, style=filled];
+1 [class=active, fontsize=12, label=action_session_start];
+2 [class=active, fontsize=12, label=utter_scan_permission];
+3 [class=active, fontsize=12, label=utter_scan_started];
+4 [class=active, fontsize=12, label=action_start_webcam];
+5 [class=active, fontsize=12, label=utter_user_will];
+9 [class=active, fontsize=12, label=utter_no_object_detected];
+10 [class="dashed active", fontsize=12, label=utter_scan_started];
+11 [class="intent active", fillcolor=lightblue, label="Vorrei effettuare la scansione della mia stanza", shape=rect, style=filled];
+12 [class="intent active", fillcolor=lightblue, label=via, shape=rect, style=filled];
+13 [class="intent active", fillcolor=lightblue, label="voglio effettuare una nuova scansione", shape=rect, style=filled];
+14 [class="intent active", fillcolor=lightblue, label="Si, grazie", shape=rect, style=filled];
+0 -> "-1"  [class="", key=NONE, label=""];
+0 -> 1  [class=active, key=NONE, label=""];
+1 -> 11  [class=active, key=0];
+2 -> 12  [class=active, key=0];
+3 -> 4  [class=active, key=NONE, label=""];
+4 -> 5  [class=active, key=NONE, label=""];
+4 -> 9  [class=active, key=NONE, label=""];
+5 -> 13  [class=active, key=0];
+9 -> 14  [class=active, key=0];
+11 -> 2  [class=active, key=0];
+12 -> 3  [class=active, key=0];
+13 -> 2  [class=active, key=0];
+14 -> 10  [class=active, key=0];
+}

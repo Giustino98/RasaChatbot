@@ -1,0 +1,62 @@
+version: "2.0"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - Ciao
+    - Buongiorno
+    - Buonasera
+    - Salve
+    - Ci sei?
+- intent: goodbye
+  examples: |
+    - Buona giornata
+    - Buon proseguimento
+    - Grazie mille
+    - A più tardi
+    - Buona notte
+    - Grazie, arrivederci
+- intent: scan
+  examples: |
+    - Vorrei effettuare una scansione della mia camera. E' possibile?
+    - Sei in grado di riconoscere gli oggetti nella mia stanza?
+    - Puoi individuare gli oggetti alle mie spalle?
+    - Puoi trovare lo scenario alle mie spalle?
+    - Vorrei effettuare una scansione della mia stanza
+    - Voglio effettuare una nuova scansione
+    - vorrei effettuare una scansione della mia stanza
+    - Vorrei effettuare la scansione della mia stanza
+    - voglio effettuare una nuova scansione
+- intent: item_choiche
+  examples: |
+    - Sì, vorrei vedere delle nuove [sedie](item)
+    - Voglio acquistare una [sedia](item)
+    - Sono interessato all'acquisto di nuove [piante](item)
+    - Vorrei acquistare un nuovo [orologio](item)
+    - voglio acquistare dei nuovi oggetti
+    - [sedia](item)
+    - [smartphone](item)
+    - [telecomando](item)
+    - [pianta](item)
+    - Si, voglio acquistare una [sedia](item)
+- intent: affirm
+  examples: |
+    - Sì
+    - Ok, puoi andare.
+    - Puoi effettuare la scansione
+    - Vai pure.
+    - Puoi scattare una foto
+    - Hai il via libera.
+    - Procedi pure.
+    - Vai
+    - Vai pure
+    - vai pure
+    - si
+    - Si, grazie
+    - Sì, grazie
+    - via
+- intent: deny
+  examples: |
+    - no
+    - no, grazie
+    - direi di no

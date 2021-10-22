@@ -1,0 +1,59 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- affirm
+- scan
+- goodbye
+- item_choiche
+- greet
+- deny
+entities:
+- item
+- items
+slots:
+  items:
+    type: list
+    influence_conversation: true
+  item:
+    type: text
+    influence_conversation: true
+  object_detected:
+    type: bool
+    influence_conversation: true
+responses:
+  utter_greet:
+  - text: Hei, cosa stai cercando?
+  - text: Ciao, come posso aiutarti?
+  utter_goodbye:
+  - text: Arrivederci.
+  - text: Arrivederci e buon proseguimento.
+  - text: torna a trovarmi, ciao!
+  utter_scan_permission:
+  - text: Certo! Assicurati di aver attivato la webcam e di aver trovato la giusta inquadratura. Quando sei pronto dammi pure il via.
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_ask_item:
+  - text: Qual è l'oggetto che vuoi acquistare tra {items}?
+  utter_scan_started:
+  - text: Avvio la scansione. Premi il tasto 'q' quando tutti gli oggetti sono stati rilevati.
+  utter_user_will:
+  - text: Sei interessato ad acquistare uno di questi oggetti?
+  utter_no_object_detected:
+  - text: Nessun oggetto rilevato. Vuoi ripetere la scansione?
+actions:
+- action_show_item
+- action_start_webcam
+- utter_goodbye
+- utter_no_object_detected
+- utter_scan_permission
+- utter_scan_started
+- utter_user_will
+- validate_show_item_form
+forms:
+  show_item_form:
+    required_slots:
+      item:
+      - entity: item
+        type: from_entity

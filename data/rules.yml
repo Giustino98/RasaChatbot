@@ -1,0 +1,25 @@
+version: "2.0"
+
+rules:
+
+- rule: item choiche activate form
+  condition:
+    - slot_was_set:
+      - object_detected: true
+  steps:
+  - action: utter_user_will
+  - or:
+      - intent: affirm
+      - intent: item_choiche
+  - action: show_item_form
+  - active_loop: show_item_form
+
+- rule: item choiche submit form
+  condition:
+  - active_loop: show_item_form
+  steps:
+  - action: show_item_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_show_item

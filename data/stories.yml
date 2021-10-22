@@ -1,0 +1,131 @@
+version: "2.0"
+
+stories:
+
+- story: utter_greet
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: object detected
+  steps:
+  - intent: scan
+  - action: utter_scan_permission
+  - intent: affirm
+  - action: utter_scan_started
+  - action: action_start_webcam
+  - slot_was_set:
+      - items:
+          - "orologio"
+          - "sedia"
+      - object_detected: true
+  - action: utter_user_will
+
+- story: object not detected
+  steps:
+  - intent: scan
+  - action: utter_scan_permission
+  - intent: affirm
+  - action: utter_scan_started
+  - action: action_start_webcam
+  - slot_was_set:
+          - items:
+          - object_detected: false
+  - action: utter_no_object_detected
+  - or:
+      - intent: affirm
+      - intent: scan
+  - action: action_start_webcam
+
+
+- story: interactive_story_1
+  steps:
+  - intent: scan
+  - action: utter_scan_permission
+  - intent: affirm
+  - action: utter_scan_started
+  - action: action_start_webcam
+  - slot_was_set:
+    - items:
+      - persona
+  - slot_was_set:
+    - object_detected: true
+  - action: utter_user_will
+  - intent: scan
+  - action: action_start_webcam
+  - slot_was_set:
+    - items:
+      - persona
+  - slot_was_set:
+    - object_detected: true
+  - action: utter_user_will
+  - intent: affirm
+  - action: show_item_form
+  - active_loop: show_item_form
+  - slot_was_set:
+    - requested_slot: item
+
+- story: interactive_story_2
+  steps:
+  - intent: scan
+  - action: utter_scan_permission
+  - intent: affirm
+  - action: utter_scan_started
+  - action: action_start_webcam
+  - slot_was_set:
+    - items: []
+  - slot_was_set:
+    - object_detected: false
+  - action: utter_no_object_detected
+  - intent: affirm
+  - action: utter_scan_started
+  - action: action_start_webcam
+  - slot_was_set:
+    - items:
+      - sedia
+  - slot_was_set:
+    - object_detected: true
+  - action: utter_user_will
+  - intent: item_choiche
+    entities:
+    - item: sedia
+  - slot_was_set:
+    - item: sedia
+  - action: show_item_form
+  - active_loop: show_item_form
+  - slot_was_set:
+    - item: sedia
+  - slot_was_set:
+    - item: sedia
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_show_item
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_3
+  steps:
+  - intent: scan
+  - action: utter_scan_permission
+  - intent: affirm
+  - action: utter_scan_started
+  - action: action_start_webcam
+  - slot_was_set:
+    - items:
+      - smartphone
+  - slot_was_set:
+    - object_detected: true
+  - action: utter_user_will
+  - intent: scan
+  - action: utter_scan_permission
+  - intent: affirm
+  - action: utter_scan_started
+  - action: action_start_webcam
+  - slot_was_set:
+    - items: []
+  - slot_was_set:
+    - object_detected: false
+  - action: utter_no_object_detected
+  - intent: affirm
+  - action: action_start_webcam
