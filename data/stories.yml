@@ -7,125 +7,187 @@ stories:
   - intent: greet
   - action: utter_greet
 
-- story: object detected
+- story: new objects
   steps:
   - intent: scan
   - action: utter_scan_permission
   - intent: affirm
-  - action: utter_scan_started
   - action: action_start_webcam
   - slot_was_set:
+      - room: "cucina"
       - items:
           - "orologio"
           - "sedia"
       - object_detected: true
+  - action: action_new_objects
+  - slot_was_set:
+      - items_not_detected:
+          - "divano"
+          - "forno"
+          - "forno a microonde"
+  - intent: affirm
   - action: utter_user_will
+  - intent: item_choiche
+    entities:
+      - item: sedia
+  - slot_was_set:
+      - item: sedia
+  - action: show_item_form
+  - active_loop: show_item_form
+  - slot_was_set:
+      - item: sedia
+  - slot_was_set:
+      - item: sedia
+  - slot_was_set:
+      - requested_slot: null
+  - active_loop: null
+  - action: action_show_item
+  - intent: goodbye
+  - action: utter_goodbye
 
-- story: object not detected
+
+- story: update_objects \ object_detected
   steps:
   - intent: scan
   - action: utter_scan_permission
   - intent: affirm
-  - action: utter_scan_started
+  - action: utter_scan_new_objects
   - action: action_start_webcam
   - slot_was_set:
-          - items:
-          - object_detected: false
-  - action: utter_no_object_detected
+      - room: "cucina"
+      - items:
+          - "orologio"
+          - "sedia"
+      - object_detected: true
+  - action: action_new_objects
+  - intent: deny
+  - action: utter_try_upgrade_objects
+  - intent: affirm
+  - action: action_update_objects
+  - action: utter_user_will
+
+- story: update_objects \ object_not_detected
+  steps:
+  - intent: scan
+  - action: utter_scan_permission
+  - intent: affirm
+  - action: utter_scan_new_objects
+  - action: action_start_webcam
+  - slot_was_set:
+      - room: "cucina"
+      - items:
+      - object_detected: false
+  - action: action_new_objects
+  - intent: deny
+  - action: utter_try_upgrade_objects
+  - intent: affirm
+  - action: action_update_objects
   - or:
       - intent: affirm
       - intent: scan
   - action: action_start_webcam
-
+  - action: action_update_objects
 
 - story: interactive_story_1
   steps:
   - intent: scan
   - action: utter_scan_permission
   - intent: affirm
-  - action: utter_scan_started
-  - action: action_start_webcam
-  - slot_was_set:
-    - items:
-      - persona
-  - slot_was_set:
-    - object_detected: true
-  - action: utter_user_will
-  - intent: scan
-  - action: action_start_webcam
-  - slot_was_set:
-    - items:
-      - persona
-  - slot_was_set:
-    - object_detected: true
-  - action: utter_user_will
-  - intent: affirm
-  - action: show_item_form
-  - active_loop: show_item_form
-  - slot_was_set:
-    - requested_slot: item
-
-- story: interactive_story_2
-  steps:
-  - intent: scan
-  - action: utter_scan_permission
-  - intent: affirm
-  - action: utter_scan_started
   - action: action_start_webcam
   - slot_was_set:
     - items: []
   - slot_was_set:
     - object_detected: false
-  - action: utter_no_object_detected
+  - slot_was_set:
+    - room: dining_room
+  - action: action_new_objects
+  - intent: deny
+  - action: utter_try_upgrade_objects
   - intent: affirm
-  - action: utter_scan_started
+  - action: action_update_objects
+  - intent: affirm
   - action: action_start_webcam
   - slot_was_set:
-    - items:
-      - sedia
+    - items: []
   - slot_was_set:
-    - object_detected: true
-  - action: utter_user_will
-  - intent: item_choiche
-    entities:
-    - item: sedia
+    - object_detected: false
   - slot_was_set:
-    - item: sedia
-  - action: show_item_form
-  - active_loop: show_item_form
-  - slot_was_set:
-    - item: sedia
-  - slot_was_set:
-    - item: sedia
-  - slot_was_set:
-    - requested_slot: null
-  - active_loop: null
-  - action: action_show_item
-  - intent: goodbye
-  - action: utter_goodbye
+    - room: dining_room
+  - action: action_update_objects
 
-- story: interactive_story_3
+- story: interactive_story_1
   steps:
+  - intent: greet
+  - action: utter_greet
   - intent: scan
   - action: utter_scan_permission
   - intent: affirm
-  - action: utter_scan_started
+  - action: utter_scan_new_objects
+  - action: action_start_webcam
+  - slot_was_set:
+    - items: []
+  - slot_was_set:
+    - object_detected: false
+  - slot_was_set:
+    - room: dining_room
+  - action: action_new_objects
+  - intent: deny
+  - action: utter_try_upgrade_objects
+  - intent: affirm
+  - action: action_update_objects
+  - intent: affirm
   - action: action_start_webcam
   - slot_was_set:
     - items:
       - smartphone
   - slot_was_set:
     - object_detected: true
+  - slot_was_set:
+    - room: dining_room
+  - action: action_update_objects
   - action: utter_user_will
+  - intent: affirm
+  - action: show_item_form
+  - active_loop: show_item_form
+  - slot_was_set:
+    - requested_slot: item
+  - slot_was_set:
+    - item: smartphone
+  - slot_was_set:
+    - item: smartphone
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_show_item
+
+- story: interactive_story_1
+  steps:
   - intent: scan
   - action: utter_scan_permission
   - intent: affirm
-  - action: utter_scan_started
+  - action: utter_scan_new_objects
   - action: action_start_webcam
   - slot_was_set:
     - items: []
   - slot_was_set:
     - object_detected: false
-  - action: utter_no_object_detected
+  - slot_was_set:
+    - room: bagno
+  - action: action_new_objects
+  - slot_was_set:
+    - items_not_detected:
+      - spazzolino
+      - toilet
+  - intent: deny
+  - action: utter_try_upgrade_objects
+  - intent: affirm
+  - action: action_update_objects
   - intent: affirm
   - action: action_start_webcam
+  - slot_was_set:
+    - items: []
+  - slot_was_set:
+    - object_detected: false
+  - slot_was_set:
+    - room: camera_da_letto
+  - action: action_update_objects

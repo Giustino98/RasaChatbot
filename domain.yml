@@ -5,15 +5,19 @@ session_config:
 intents:
 - affirm
 - scan
-- goodbye
+- deny
 - item_choiche
 - greet
-- deny
+- goodbye
 entities:
 - item
 - items
+- room
 slots:
   items:
+    type: list
+    influence_conversation: true
+  items_not_detected:
     type: list
     influence_conversation: true
   item:
@@ -22,9 +26,18 @@ slots:
   object_detected:
     type: bool
     influence_conversation: true
+  room:
+    type: categorical
+    influence_conversation: true
+    values:
+    - sala_da_pranzo
+    - camera_da_letto
+    - cucina
+    - salotto
+    - bagno
 responses:
   utter_greet:
-  - text: Hei, cosa stai cercando?
+  - text: Hei, sono a tua disposizione.
   - text: Ciao, come posso aiutarti?
   utter_goodbye:
   - text: Arrivederci.
@@ -38,17 +51,23 @@ responses:
   - text: Qual è l'oggetto che vuoi acquistare tra {items}?
   utter_scan_started:
   - text: Avvio la scansione. Premi il tasto 'q' quando tutti gli oggetti sono stati rilevati.
+  utter_scan_new_objects:
+  - text: Avvio la scansione. Premi il tasto 'q' quando hai ottenuto la giusta inquadratura della tua stanza.
   utter_user_will:
   - text: Sei interessato ad acquistare uno di questi oggetti?
   utter_no_object_detected:
   - text: Nessun oggetto rilevato. Vuoi ripetere la scansione?
+  utter_try_upgrade_objects:
+  - text: Nessun problema. Posso provare a proporti nuovi oggetti tra quelli che già possiedi?
 actions:
+- action_new_objects
 - action_show_item
 - action_start_webcam
-- utter_goodbye
-- utter_no_object_detected
+- action_update_objects
+- utter_greet
+- utter_scan_new_objects
 - utter_scan_permission
-- utter_scan_started
+- utter_try_upgrade_objects
 - utter_user_will
 - validate_show_item_form
 forms:

@@ -8,6 +8,7 @@ nlu:
     - Buonasera
     - Salve
     - Ci sei?
+    - ciao
 - intent: goodbye
   examples: |
     - Buona giornata
@@ -39,6 +40,12 @@ nlu:
     - [telecomando](item)
     - [pianta](item)
     - Si, voglio acquistare una [sedia](item)
+    - Voglio acquistare uno [smartphone](item)
+    - Vorrei acquistare un [letto](item)
+    - Si, voglio vedere un [tvmonitor](item)
+    - Scelgo dalla lista il [divano](item)
+    - [forno](item)
+    - [forno a microonde](item)
 - intent: affirm
   examples: |
     - Sì
@@ -55,8 +62,12 @@ nlu:
     - Si, grazie
     - Sì, grazie
     - via
+    - si, grazie
+    - Si
 - intent: deny
   examples: |
     - no
     - no, grazie
     - direi di no
+    - No, grazie
+    - No, grazie ma non sono interessato.
