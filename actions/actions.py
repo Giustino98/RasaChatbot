@@ -71,15 +71,19 @@ class ActionShowItem(Action):
         collection = db.HouseItems
 
         item_db = collection.find_one({'nome': item_chosen})
-        num_items = int((len(item_db) - 2) / 2)
-        dispatcher.utter_message(
-            text="Perfetto, ti mostro n." + str(num_items) + " opzioni che hai a disposizione.")
-        for j in range(0, num_items):
-            #  img = Image.open(item_db['image' + str(j + 1)])
-            #  img.show(title=item_chosen + str(j + 1))
-            link = str(item_db['link' + str(j + 1)])
-            dispatcher.utter_message(text="Link n." + str(j + 1) + "= " + link)
-            dispatcher.utter_message(image=item_db['image' + str(j + 1)])
+        if item_db is not None:
+            num_items = int((len(item_db) - 2) / 2)
+            dispatcher.utter_message(
+                text="Perfetto, ti mostro n." + str(num_items) + " opzioni che hai a disposizione.")
+            for j in range(0, num_items):
+                #  img = Image.open(item_db['image' + str(j + 1)])
+                #  img.show(title=item_chosen + str(j + 1))
+                link = str(item_db['link' + str(j + 1)])
+                dispatcher.utter_message(text="Link n." + str(j + 1) + "= " + link)
+                dispatcher.utter_message(image=item_db['image' + str(j + 1)])
+        else:
+            dispatcher.utter_message(
+                text="Non ho trovato oggetti di questo tipo che puoi acquistare.")
 
         return []
 
@@ -88,7 +92,7 @@ class ActionStartWebcam(Action):
     whT = 320  # dipende dai pesi e dalla configurazione della rete che sto considerando
     confThreshold = 0.5
     nmsThreshold = 0.3
-    classes = [56, 58, 65, 67, 74]
+    classes = [56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 78]
 
     classesFile = 'coco.names'
     classNames = []
@@ -277,7 +281,7 @@ class UpdateObjects(Action):
         if object_detected:
             for i in range(0, len(items)):
                 dispatcher.utter_message(text="Oggetto n." + str(i + 1) + ": " + items[i] + "\n")
-                dispatcher.utter_message(template="utter_user_will")
+            #  dispatcher.utter_message(template="utter_user_will")
         else:
             dispatcher.utter_message(text="Nessun oggetto rilevato. Vuoi ripetere la scansione?")
 
@@ -294,6 +298,7 @@ class NewObjects(Action):
     ) -> List[Dict[Text, Any]]:
         # custom behavior
         room = tracker.get_slot("room")
+        room = room.replace("_", " ")
         items = tracker.get_slot("items")
 
         MONGODB_HOST = "localhost"
@@ -306,12 +311,18 @@ class NewObjects(Action):
 
         item_db = collection.find_one({'room': room})
 
-        dispatcher.utter_message(text="Vedo che sei nella stanza: " + str(
-            room) + ". Potresti essere interessato all'acquisto di uno dei seguenti oggetti.")
+        dispatcher.utter_message(text="Vedo che sei nella stanza: " +
+                                      room + ". Potresti essere interessato all'acquisto di uno dei seguenti oggetti.")
         items_not_detected = []
+        sugg = False
+        j = 1
         for i in range(0, len(item_db) - 2):
             if item_db['item' + str(i + 1)] not in items:
-                dispatcher.utter_message(text="Oggetto nr." + str(i + 1) + ": " + item_db['item' + str(i + 1)])
+                sugg = True
+                dispatcher.utter_message(text="Oggetto nr." + str(j) + ": " + item_db['item' + str(i + 1)])
+                j = j + 1
                 items_not_detected.append(item_db['item' + str(i + 1)])
+        if sugg is False:
+            dispatcher.utter_message(text="Ops... Vedo che la tua stanza è molto ricca, non ho oggetti da suggerirti.")
 
         return [SlotSet("items_not_detected", items_not_detected)]

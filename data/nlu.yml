@@ -46,6 +46,8 @@ nlu:
     - Scelgo dalla lista il [divano](item)
     - [forno](item)
     - [forno a microonde](item)
+    - [laptop](item)
+    - [mouse](item)
 - intent: affirm
   examples: |
     - Sì
