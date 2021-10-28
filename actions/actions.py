@@ -9,6 +9,7 @@ from typing import Any, Text, Dict, List
 import time
 
 import cv2
+
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
@@ -20,14 +21,14 @@ from torch.autograd import Variable as V
 import torchvision.models as models
 from torchvision import transforms as trn
 from torch.nn import functional as F
-import os
-from PIL import Image
-
-from rasa_sdk.types import DomainDict
 
 from PIL import Image
 
 import numpy as np
+
+import keyboard
+
+from flask import Response, Flask, render_template
 
 
 class ValidateShowItem(FormValidationAction):
@@ -127,6 +128,11 @@ class ActionStartWebcam(Action):
     # load the class label
     file_name = 'categories_places365.txt'
 
+    frame = cv2.imread('placeholder-image.jpg')
+    # encode the frame in JPEG format
+    (flag, imagetoshow) = cv2.imencode(".jpg", frame)
+    encodedImage = imagetoshow.tobytes()
+
     def name(self) -> Text:
         return "action_start_webcam"
 
@@ -171,6 +177,9 @@ class ActionStartWebcam(Action):
 
             cv2.putText(img, "Fps: " + str(fps), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 255), 2)
             cv2.imshow('Image', img)
+           # (flag, temp) = cv2.imencode(".jpg", img)
+           #q self.encodedImage = temp.tobytes()
+
             k = cv2.waitKey(1) & 0xFF
 
             object_detected = False
@@ -194,10 +203,7 @@ class ActionStartWebcam(Action):
                 classes.append(line.strip().split(' ')[0][3:])
         classes = tuple(classes)
 
-        # load the test image
-        #   img_name = 'DemoPictures/diningroom_demo.jpg'
 
-        #  img = Image.open(img_name)
         cv2_im = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         pil_im = Image.fromarray(cv2_im)
         input_img = V(self.centre_crop(pil_im).unsqueeze(0))

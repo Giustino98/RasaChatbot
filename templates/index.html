@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>Rasa Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <section class="header">
+        <nav>
+             <a href="index.html"><img src="images/logo.png"></a>
+        </nav>
+
+
+    <div class="text-box">
+        <h1>Rasa chatbot for your home</h1>
+        <p>Utilizza il widget in basso a destra, pu&ograve; scansionare l'ambiente circostante <br> e proporti nuovi oggetti da acquistare.</p>
+    </div>
+
+    </section>
+
+    <section class="functions">
+        <h1>Technologies</h1>
+        <p>Da scrivere</p>
+
+        <div class="row">
+            <div class="functions-col">
+                <h3>Funzionalit&agrave; 1</h3>
+                <p>Da scrivere</p>
+            </div>
+              <div class="functions-col">
+                <h3>Funzionalit&agrave; 2</h3>
+                <p>Da scrivere</p>
+            </div>
+              <div class="functions-col">
+                <h3>Funzionalit&agrave; 3</h3>
+                <p>Da scrivere</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="example">
+        <h1>Features</h1>
+        <p>Il chatbot riconosce la stanza della tua casa ed &egrave; in grado di proporti nuovi acquisti in base agli oggetti da cui sei circondato. <br> Il suo tono si
+        adatta al tuo stato d'animo.</p>
+
+        <div class="row">
+            <div class="example-col">
+                <img src="images/room_classification.png">
+                <div class="layer">
+                    <h3>Scene classification</h3>
+                </div>
+            </div>
+                        <div class="example-col">
+                <img src="images/object_detection.png">
+                <div class="layer">
+                    <h3>Object detection</h3>
+                </div>
+            </div>
+                        <div class="example-col">
+                <img src="images/sentiment_analysis.png">
+                <div class="layer">
+                    <h3>Sentiment analysis</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About us</h4>
+        <p>Lorem ipsum ec..........Try try prova prova</p>
+    </section>
+
+    <script>!(function () {
+  let e = document.createElement("script"),
+    t = document.head || document.getElementsByTagName("head")[0];
+  (e.src =
+    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+    // Replace 1.x.x with the version that you want
+    (e.async = !0),
+    (e.onload = () => {
+      window.WebChat.default(
+        {initPayload: '/greet',
+          customData: { language: "it" },
+          socketUrl: "http://localhost:5005",
+            title: 'Rasa Chatbot',
+          // add other props here
+        },
+        null
+      );
+    }),
+    t.insertBefore(e, t.firstChild);
+})();
+
+    </script>
+</body>
+</html>
+
