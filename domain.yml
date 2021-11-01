@@ -1,18 +1,34 @@
 version: '2.0'
 session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  session_expiration_time: 1000
+  carry_over_slots_to_new_session: false
 intents:
-- affirm
-- scan
-- deny
-- item_choiche
-- greet
-- goodbye
+- affirm:
+    ignore_entities:
+    - sentiment
+- feedback:
+    use_entities:
+      - sentiment
+- item_choiche:
+    ignore_entities:
+    - sentiment
+- scan:
+    ignore_entities:
+    - sentiment
+- deny:
+    ignore_entities:
+    - sentiment
+- greet:
+    ignore_entities:
+    - sentiment
+- goodbye:
+    ignore_entities:
+    - sentiment
 entities:
 - item
 - items
 - room
+- sentiment
 slots:
   items:
     type: list
@@ -22,6 +38,7 @@ slots:
     influence_conversation: true
   item:
     type: text
+    auto_fill: false
     influence_conversation: true
   object_detected:
     type: bool
@@ -35,9 +52,16 @@ slots:
     - cucina
     - salotto
     - bagno
+  sentiment:
+    type: categorical
+    influence_conversation: true
+    values:
+    - Positive
+    - Neutral
+    - Negative
 responses:
   utter_greet:
-  - text: Hei, sono a tua disposizione.
+  - text: Ehi, sono qui a tua disposizione.
   - text: Ciao, come posso aiutarti?
   utter_goodbye:
   - text: Arrivederci.
@@ -47,8 +71,6 @@ responses:
   - text: Certo! Assicurati di aver attivato la webcam e di aver trovato la giusta inquadratura. Quando sei pronto dammi pure il via.
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
-  utter_ask_item:
-  - text: Qual è l'oggetto che vuoi acquistare tra {items}?
   utter_scan_started:
   - text: Avvio la scansione. Premi il tasto 'q' quando tutti gli oggetti sono stati rilevati.
   utter_scan_new_objects:
@@ -59,6 +81,12 @@ responses:
   - text: Nessun oggetto rilevato. Vuoi ripetere la scansione?
   utter_try_upgrade_objects:
   - text: Nessun problema. Posso provare a proporti nuovi oggetti tra quelli che già possiedi?
+  utter_user_positive:
+  - text: Sono davvero contento che i risultati proposti siano di tuo gradimento! :D
+  utter_user_negative:
+  - text: Sono molto dispiaciuto che non ti piaccia nessuno dei risultati proposti. Vuoi chiedermi altro? Sono qui a tua disposizione.
+  utter_user_neutral:
+  - text: Sono contento che i risultati siano di tuo gradimento.
 actions:
 - action_new_objects
 - action_show_item
@@ -68,11 +96,13 @@ actions:
 - utter_scan_new_objects
 - utter_scan_permission
 - utter_try_upgrade_objects
+- utter_user_negative
+- utter_user_positive
 - utter_user_will
 - validate_show_item_form
 forms:
   show_item_form:
     required_slots:
       item:
-      - entity: item
-        type: from_entity
+      - type: from_entity
+        entity: item

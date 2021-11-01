@@ -26,10 +26,6 @@ from PIL import Image
 
 import numpy as np
 
-import keyboard
-
-from flask import Response, Flask, render_template
-
 
 class ValidateShowItem(FormValidationAction):
     def name(self) -> Text:
@@ -43,13 +39,25 @@ class ValidateShowItem(FormValidationAction):
                       ) -> Dict[Text, Any]:
         items = tracker.get_slot("items")
         items_not_detected = tracker.get_slot("items_not_detected")
-        if len(items) > 0:
+        items_to_choose = []
+        suggest = False
+        if items is not None:
+            suggest = True
+            items_to_choose.append(items)
             if slot_value in items:
                 return {"item": slot_value}
-        if len(items_not_detected) > 0:
+        if items_not_detected is not None:
+            suggest = True
+            items_to_choose.append(items_not_detected)
             if slot_value in items_not_detected:
                 return {"item": slot_value}
         dispatcher.utter_message(text=f"L'oggetto {slot_value} non è tra quelli suggeriti.")
+        if suggest is False:
+            dispatcher.utter_message(
+                text=f"Se vuoi acquistare un oggetto devo prima effettuare una scansione della tua stanza.")
+        else:
+            dispatcher.utter_message(text=f"Puoi scegliere tra {items_to_choose}")
+
         return {"item": None}
 
 
@@ -177,8 +185,8 @@ class ActionStartWebcam(Action):
 
             cv2.putText(img, "Fps: " + str(fps), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 255), 2)
             cv2.imshow('Image', img)
-           # (flag, temp) = cv2.imencode(".jpg", img)
-           #q self.encodedImage = temp.tobytes()
+            # (flag, temp) = cv2.imencode(".jpg", img)
+            # q self.encodedImage = temp.tobytes()
 
             k = cv2.waitKey(1) & 0xFF
 
@@ -202,7 +210,6 @@ class ActionStartWebcam(Action):
             for line in class_file:
                 classes.append(line.strip().split(' ')[0][3:])
         classes = tuple(classes)
-
 
         cv2_im = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         pil_im = Image.fromarray(cv2_im)
