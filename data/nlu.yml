@@ -2,7 +2,7 @@ version: "2.0"
 nlu:
 - intent: greet
   examples: |
-    - hey
+    - Ehi
     - Ciao
     - Buongiorno
     - Buonasera
@@ -30,7 +30,8 @@ nlu:
     - voglio effettuare una nuova scansione
     - Voglio effettuare una scansione della mia stanza
     - voglio effettuare la scansione della mia stanza
-    - vorrei effettuare una scansione della mia stanza
+    - Voglio effettuare una scansione della mia stanza
+    - Voglio effettuare una nuova scansione della mia stanza
 - intent: item_choiche
   examples: |
     - Sì, vorrei vedere delle nuove [sedie](item)
@@ -75,6 +76,7 @@ nlu:
     - via
     - si, grazie
     - Si
+    - Vai pure
     - vai pure
 - intent: deny
   examples: |
@@ -84,6 +86,13 @@ nlu:
     - No, grazie
     - No, grazie ma non sono interessato.
     - No, non sono interessato all'acquisto di questi oggetti.
+- intent: inform_room
+  examples: |
+    - Non preoccuparti, sono in [camera da letto](room)
+    - Mi trovo in [cucina](room)
+    - Sono nel [bagno](room)
+    - La stanza in cui mi trovo è la [sala da pranzo](room)
+    - Sono in [salotto](room)
 - intent: feedback
   examples: |
     - Mi hai proposto davvero degli ottimi risultati, grazie.
@@ -93,3 +102,6 @@ nlu:
     - Voglio vedere altre opzioni perchè quello che mi hai proposto sono pessime.
     - Wow, mi hai proposto davvero dei risultati ottimi :)
     - I risultati che mi hai mostrato sono davvero terribili
+    - Le [sedie](item) che mi hai mostrato sono orribili.
+    - Non mi piace nessuno degli [orologi](item) elencati.
+    - L'ultimo [tavolo](item) è perfetto per i miei gusti e per la mia stanza.

@@ -1,11 +1,5 @@
 from rasa.nlu.components import Component
-from rasa.nlu import utils
-from rasa.nlu.model import Metadata
-
-import nltk
-#from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import os
 
 
 class SentimentAnalyzer(Component):

@@ -45,6 +45,46 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
+- story: new object \ room not detected
+  steps:
+    - intent: scan
+    - action: utter_scan_permission
+    - intent: affirm
+    - action: action_start_webcam
+    - slot_was_set:
+        - room:
+        - items:
+            - "orologio"
+            - "sedia"
+        - object_detected: true
+    - action: utter_ask_room
+    - intent: inform_room
+    - action: action_new_objects
+    - slot_was_set:
+        - items_not_detected:
+            - "divano"
+            - "forno"
+            - "forno a microonde"
+    - intent: affirm
+    - action: utter_user_will
+    - intent: item_choiche
+      entities:
+        - item: sedia
+    - slot_was_set:
+        - item: sedia
+    - action: show_item_form
+    - active_loop: show_item_form
+    - slot_was_set:
+        - item: sedia
+    - slot_was_set:
+        - item: sedia
+    - slot_was_set:
+        - requested_slot: null
+    - active_loop: null
+    - action: action_show_item
+    - intent: goodbye
+    - action: utter_goodbye
+
 
 - story: update_objects \ object_detected
   steps:
@@ -166,3 +206,68 @@ stories:
     entities:
     - sentiment: Negative
   - action: utter_user_negative
+
+- story: interactive_story_1
+  steps:
+  - intent: scan
+    entities:
+    - sentiment: Positive
+  - slot_was_set:
+    - sentiment: Positive
+  - action: utter_scan_permission
+  - intent: affirm
+    entities:
+    - sentiment: Neutral
+  - slot_was_set:
+    - sentiment: Neutral
+  - action: utter_scan_new_objects
+  - action: action_start_webcam
+  - slot_was_set:
+    - items: []
+  - slot_was_set:
+    - object_detected: false
+  - slot_was_set:
+    - room: camera_da_letto
+  - action: action_new_objects
+  - slot_was_set:
+    - items_not_detected:
+      - letto
+      - tvmonitor
+      - libro
+      - sedia
+      - laptop
+      - mouse
+  - intent: scan
+    entities:
+    - sentiment: Positive
+  - slot_was_set:
+    - sentiment: Positive
+  - action: utter_scan_permission
+  - intent: affirm
+    entities:
+    - sentiment: Neutral
+  - slot_was_set:
+    - sentiment: Neutral
+  - action: utter_scan_new_objects
+  - action: action_start_webcam
+  - slot_was_set:
+    - items: []
+  - slot_was_set:
+    - object_detected: false
+  - slot_was_set:
+    - room: null
+  - action: utter_ask_room
+  - intent: inform_room
+    entities:
+    - room: camera_da_letto
+  - slot_was_set:
+    - room: camera_da_letto
+  - action: action_new_objects
+  - slot_was_set:
+    - items_not_detected:
+      - letto
+      - tvmonitor
+      - libro
+      - sedia
+      - laptop
+      - mouse

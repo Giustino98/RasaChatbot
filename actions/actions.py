@@ -229,7 +229,11 @@ class ActionStartWebcam(Action):
                 idx_temp.append(idx[i])
 
         idx = idx_temp
-        room = classes[idx[0]]
+        probs = probs_temp
+        if probs[0] > 0.01:
+            room = classes[idx[0]]
+        else:
+            room = None
         #  dispatcher.utter_message(text="Vedo che sei nella stanza: " + classes[
         #     idx[0]] + ". Sei interessato ad acquistare uno dei seguenti oggetti?")
 

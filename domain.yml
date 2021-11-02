@@ -3,16 +3,19 @@ session_config:
   session_expiration_time: 1000
   carry_over_slots_to_new_session: false
 intents:
+- inform_room:
+    use_entities:
+    - room
 - affirm:
+    ignore_entities:
+    - sentiment
+- scan:
     ignore_entities:
     - sentiment
 - feedback:
     use_entities:
-      - sentiment
-- item_choiche:
-    ignore_entities:
     - sentiment
-- scan:
+- item_choiche:
     ignore_entities:
     - sentiment
 - deny:
@@ -56,9 +59,9 @@ slots:
     type: categorical
     influence_conversation: true
     values:
-    - Positive
-    - Neutral
-    - Negative
+    - positive
+    - neutral
+    - negative
 responses:
   utter_greet:
   - text: Ehi, sono qui a tua disposizione.
@@ -87,11 +90,25 @@ responses:
   - text: Sono molto dispiaciuto che non ti piaccia nessuno dei risultati proposti. Vuoi chiedermi altro? Sono qui a tua disposizione.
   utter_user_neutral:
   - text: Sono contento che i risultati siano di tuo gradimento.
+  utter_ask_room:
+  - text: Non sono riuscito a individuare la tua stanza, puoi aiutarmi?
+    buttons:
+    - title: Camera da letto
+      payload: /inform_room{{"room":"camera_da_letto"}}
+    - title: Cucina
+      payload: /inform_room{{"room":"cucina"}}
+    - title: Bagno
+      payload: /inform_room{{"room":"bagno"}}
+    - title: Salotto
+      payload: /inform_room{{"room":"salotto"}}
+    - title: Sala da pranzo
+      payload: /inform_room{{"room":"sala_da_pranzo"}}
 actions:
 - action_new_objects
 - action_show_item
 - action_start_webcam
 - action_update_objects
+- utter_ask_room
 - utter_greet
 - utter_scan_new_objects
 - utter_scan_permission
