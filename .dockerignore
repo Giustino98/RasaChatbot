@@ -1,0 +1,6 @@
+venv
+.config/*
+.keras/*
+tests/*
+templates/*
+actions/*

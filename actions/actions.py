@@ -3,8 +3,7 @@
 #
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
-
-
+import os
 from typing import Any, Text, Dict, List
 import time
 
@@ -103,11 +102,11 @@ class ActionStartWebcam(Action):
     nmsThreshold = 0.3
     classes = [56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 78]
 
-    classesFile = 'coco.names'
+    classesFile = 'actions/coco.names'
     classNames = []
 
-    modelConfiguration = 'C:/Users/giust/PycharmProjects/YoloDemo/yolo_cfg/yolo3.cfg'
-    modelWeights = 'C:/Users/giust/PycharmProjects/YoloDemo/yolo_weights/yolo3-320.weights'
+    modelConfiguration = os.path.abspath("actions/YoloDep/yolo3.cfg")
+    modelWeights = os.path.abspath("actions/YoloDep/yolo3-320.weights")
 
     net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
@@ -117,7 +116,7 @@ class ActionStartWebcam(Action):
     arch = 'resnet18'
 
     # load the pre-trained weights
-    model_file = '%s_places365.pth.tar' % arch
+    model_file = 'actions/%s_places365.pth.tar' % arch
 
     model = models.__dict__[arch](num_classes=365)
     checkpoint = torch.load(model_file, map_location=lambda storage, loc: storage)
@@ -134,12 +133,7 @@ class ActionStartWebcam(Action):
     ])
 
     # load the class label
-    file_name = 'categories_places365.txt'
-
-    frame = cv2.imread('placeholder-image.jpg')
-    # encode the frame in JPEG format
-    (flag, imagetoshow) = cv2.imencode(".jpg", frame)
-    encodedImage = imagetoshow.tobytes()
+    file_name = 'actions/categories_places365.txt'
 
     def name(self) -> Text:
         return "action_start_webcam"
